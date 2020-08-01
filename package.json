@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend:dataing": "npm run start --prefix frontend --project dating",
+    "frontend:dataing-admin": "npm run start --prefix frontend --project dating-admin",
+    "frontend": "concurrently \"npm run frontend:dataing\" \"npm run frontend:dataing-admin\""
   },
   "author": "",
   "license": "ISC"

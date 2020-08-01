@@ -194,7 +194,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dating-admin:build"
+            "browserTarget": "dating-admin:build",
+            "port": 4201
           },
           "configurations": {
             "production": {
