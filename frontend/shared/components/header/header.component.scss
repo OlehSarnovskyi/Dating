@@ -1,0 +1,15 @@
+@import 'mixins';
+@import 'variables';
+
+.header {
+  @include display-flex(space-between);
+  background-color: $default-color-theme;
+
+  &__nav-left {
+    margin-left: 70px;
+  }
+
+  &__button {
+    margin: 5px;
+  }
+}
