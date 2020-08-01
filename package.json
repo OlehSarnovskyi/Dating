@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend-install": "npm install --prefix frontend",
-    "frontend:dataing": "npm run start --prefix frontend --project dating",
-    "frontend:dataing-admin": "npm run start --prefix frontend --project dating-admin",
-    "frontend": "concurrently \"npm run frontend:dataing\" \"npm run frontend:dataing-admin\""
+    "frontend:dating": "npm run start --prefix frontend --project dating",
+    "frontend:dating-admin": "npm run start --prefix frontend --project dating-admin",
+    "frontend": "concurrently \"npm run frontend:dating\" \"npm run frontend:dating-admin\""
   },
   "author": "Oleh Sarnovskyi",
   "license": "ISC"
