@@ -4,7 +4,11 @@ import {AuthLayoutComponent} from "./auth-layout.component";
 
 
 const routes: Routes = [
-  {path: '', component: AuthLayoutComponent}
+  {
+    path: '', component: AuthLayoutComponent, children: [
+      {path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)}
+    ]
+  }
 ]
 
 @NgModule({
@@ -13,7 +17,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   exports: [
-    AuthLayoutComponent,
     RouterModule
   ]
 })
