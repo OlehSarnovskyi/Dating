@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
 const keys = require('../config/keys')
+const errorHandler = require('../utils/errorHandler')
 
 
 module.exports.register = async (req, res) => {
@@ -29,7 +30,7 @@ module.exports.register = async (req, res) => {
                 shortCode: 'USER_CREATED'
             })
         } catch (e) {
-
+            errorHandler(res, e)
         }
 
     }
