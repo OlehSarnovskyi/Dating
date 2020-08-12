@@ -50,7 +50,7 @@ module.exports.login = async (req, res) => {
             }, keys.jwt, {expiresIn: 60 * 60})
 
             res.status(200).json({
-                token: `Bearer ${token}`,
+                accessToken: `Bearer ${token}`,
                 shortCode: 'SIGNED_IN'
             })
         } else {
