@@ -12,6 +12,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {DEFAULT_ROUTER_FEATURENAME, routerReducer, StoreRouterConnectingModule} from "@ngrx/router-store";
 import {LoginStoreModule} from "./layouts/auth-layout/pages/login/store/login-store.module";
+import {EffectsModule} from "@ngrx/effects";
 
 
 const NGRX_MODULES = [
@@ -20,6 +21,7 @@ const NGRX_MODULES = [
   }, {}),
   StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
   StoreRouterConnectingModule.forRoot(),
+  EffectsModule.forRoot([]),
   LoginStoreModule
 ]
 

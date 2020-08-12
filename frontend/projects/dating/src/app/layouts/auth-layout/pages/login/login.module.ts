@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {RouterModule, Routes} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from "./login.component";
-import { LoginFormComponent } from './components/login-form/login-form.component';
+import {LoginFormComponent} from './components/login-form/login-form.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {HttpClientModule} from "@angular/common/http";
 
 
 const routes: Routes = [
@@ -18,11 +20,13 @@ const routes: Routes = [
     LoginFormComponent
   ],
   imports: [
+    CommonModule,
     RouterModule.forChild(routes),
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [
     RouterModule
