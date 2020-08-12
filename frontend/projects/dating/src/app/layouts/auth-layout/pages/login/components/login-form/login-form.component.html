@@ -10,5 +10,6 @@
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
-  <button type="submit" mat-button color="accent" [disabled]="submitting || form.invalid">Submit</button>
+  <button type="submit" mat-flat-button color="primary" [disabled]="submitting || form.invalid">Sign in</button>
+  <button type="button" mat-flat-button color="accent" routerLink="/register">Register</button>
 </form>
