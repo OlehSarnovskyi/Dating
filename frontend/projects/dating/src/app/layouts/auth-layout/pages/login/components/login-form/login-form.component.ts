@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ILoginForm} from "../../models/login.interface";
+import {ILoginForm} from "../..";
 
 @Component({
   selector: 'app-login-form',

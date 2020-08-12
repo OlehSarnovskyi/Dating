@@ -1,6 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {ILoginForm} from "../models/login.interface";
-import {ISignedIn} from "../models/signed-in.interface";
+import {ILoginForm, ISignedIn} from "..";
 
 export const login = createAction(
   '[Login] login',

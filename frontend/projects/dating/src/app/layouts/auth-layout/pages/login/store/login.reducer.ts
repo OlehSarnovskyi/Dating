@@ -1,6 +1,5 @@
 import {createReducer, on} from "@ngrx/store";
-import {login, loginFailed, loginSuccess} from "./login.actions";
-import {ISignedIn} from "../models/signed-in.interface";
+import {ISignedIn, login, loginFailed, loginSuccess} from "..";
 
 export const LOGIN_FEATURE_NAME = 'login'
 

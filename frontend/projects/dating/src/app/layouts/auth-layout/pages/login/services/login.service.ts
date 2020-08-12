@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ILoginForm} from "../models/login.interface";
 import {Observable} from "rxjs";
-import {ISignedIn} from "../models/signed-in.interface";
 import {map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {ILoginForm, ISignedIn} from "..";
 
 @Injectable()
 export class LoginService {
