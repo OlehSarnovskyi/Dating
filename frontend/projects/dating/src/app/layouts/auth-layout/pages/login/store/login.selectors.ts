@@ -13,7 +13,7 @@ export const getLoaded = createSelector(
   state => state.loaded
 )
 
-export const getServerError = createSelector(
+export const getShortCode = createSelector(
   getFeature,
-  state => state.serverError
+  state => state.shortCode
 )

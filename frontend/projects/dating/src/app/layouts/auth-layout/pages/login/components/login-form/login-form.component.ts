@@ -11,7 +11,6 @@ import {ILoginForm} from "../../models/login.interface";
 export class LoginFormComponent implements OnInit {
 
   @Input() submitting: boolean
-  @Input() errorMessage: string
 
   @Output() formData = new EventEmitter<ILoginForm>()
 

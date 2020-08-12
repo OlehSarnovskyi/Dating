@@ -1,6 +1,5 @@
 <app-login-form
   *ngIf="loaded$ | async"
   [submitting]="loading$ | async"
-  [errorMessage]="serverError$ | async"
   (formData)="login($event)"
 ></app-login-form>
