@@ -11,6 +11,7 @@ import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {DEFAULT_ROUTER_FEATURENAME, routerReducer, StoreRouterConnectingModule} from "@ngrx/router-store";
+import {LoginStoreModule} from "./layouts/auth-layout/pages/login/store/login-store.module";
 
 
 const NGRX_MODULES = [
@@ -18,7 +19,8 @@ const NGRX_MODULES = [
     [DEFAULT_ROUTER_FEATURENAME]: routerReducer
   }, {}),
   StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-  StoreRouterConnectingModule.forRoot()
+  StoreRouterConnectingModule.forRoot(),
+  LoginStoreModule
 ]
 
 @NgModule({

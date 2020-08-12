@@ -1,6 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ILoginForm} from "./models/login.interface";
 import {LoginService} from "./services/login.service";
+import {select, Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {getLoaded, getLoading, getServerError} from "./store/login.selectors";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +14,12 @@ import {LoginService} from "./services/login.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private service: LoginService) { }
+  loading$: Observable<boolean> = this.store$.pipe(select(getLoading))
+  loaded$: Observable<boolean> = this.store$.pipe(select(getLoaded))
+  serverError$: Observable<string> = this.store$.pipe(select(getServerError))
+
+  constructor(private store$: Store,
+              private service: LoginService) { }
 
   ngOnInit(): void {
   }

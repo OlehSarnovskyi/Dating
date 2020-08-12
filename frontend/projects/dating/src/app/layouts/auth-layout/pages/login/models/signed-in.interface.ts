@@ -1,4 +1,4 @@
-export interface ISignedInInterface {
+export interface ISignedIn {
   token: string
   shortCode: string
 }
