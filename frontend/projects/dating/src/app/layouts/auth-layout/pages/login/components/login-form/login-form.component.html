@@ -2,7 +2,6 @@
   <mat-form-field appearance="fill">
     <mat-label>Enter your email</mat-label>
     <input matInput placeholder="pat@example.com" formControlName="email">
-    <mat-error>qwe</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
@@ -11,5 +10,6 @@
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
+  <mat-error>{{errorMessage}}</mat-error>
   <button type="submit" mat-button color="accent" [disabled]="submitting || form.invalid">Submit</button>
 </form>
