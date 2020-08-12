@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ILoginForm} from "../../models/login.interface";
 
@@ -9,6 +9,9 @@ import {ILoginForm} from "../../models/login.interface";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginFormComponent implements OnInit {
+
+  @Input() submitting: boolean
+  @Input() errorMessage: string
 
   @Output() formData = new EventEmitter<ILoginForm>()
 

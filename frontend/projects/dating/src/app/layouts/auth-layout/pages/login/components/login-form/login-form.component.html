@@ -11,5 +11,5 @@
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
-  <button type="submit">Submit</button>
+  <button type="submit" mat-button color="accent" [disabled]="submitting || form.invalid">Submit</button>
 </form>

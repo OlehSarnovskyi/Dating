@@ -6,6 +6,7 @@ import {LoginComponent} from "./login.component";
 import {LoginFormComponent} from './components/login-form/login-form.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {HttpClientModule} from "@angular/common/http";
 
@@ -25,6 +26,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule
   ],
