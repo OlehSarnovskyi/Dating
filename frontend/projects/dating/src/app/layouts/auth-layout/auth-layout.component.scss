@@ -1,0 +1,10 @@
+@import "mixins";
+
+.container {
+  @include display-flex(center, center);
+  height: 100vh;
+  background: lightcoral;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
