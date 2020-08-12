@@ -39,23 +39,18 @@ export class ScrollbarComponent implements AfterViewInit, OnDestroy {
     this.subs$.add(fromEvent(window, 'scroll')
       .pipe(startWith(true))
       .subscribe(() => {
-        console.log('scroll');
         let progressHeight = (window.pageYOffset / totalHeight) * 100
         this.renderer.setStyle(this.progressBarRef.nativeElement, 'height', `${progressHeight}%`)
       }))
 
     this.subs$.add(fromEvent(this.progressBarRef.nativeElement, 'click')
       .subscribe(() => {
-        console.log('1');
         const lessThanCurrentY = window.pageYOffset - 100
         window.scroll(0, lessThanCurrentY)
       }))
 
     this.subs$.add(fromEvent(this.scrollPathRef.nativeElement, 'click')
       .subscribe(() => {
-        console.log('2');
-        console.log(window);
-        console.log(window.pageYOffset);
         const moreThanCurrentY = window.pageYOffset + 100
         window.scroll(0, moreThanCurrentY)
       }))
