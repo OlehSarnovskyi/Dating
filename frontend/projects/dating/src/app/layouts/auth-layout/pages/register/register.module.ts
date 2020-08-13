@@ -6,7 +6,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {RegisterComponent} from "./register.component";
+import {RegisterFormComponent} from './components/register-form/register-form.component';
+import {AutocompleteGroupPipeModule} from "../../../../../../../../modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
 
 
 const routes: Routes = [
@@ -15,7 +21,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    RegisterComponent
+    RegisterComponent,
+    RegisterFormComponent
   ],
   imports: [
     CommonModule,
@@ -24,10 +31,16 @@ const routes: Routes = [
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    AutocompleteGroupPipeModule
   ],
   exports: [
     RouterModule
   ]
 })
-export class RegisterModule { }
+export class RegisterModule {
+}
