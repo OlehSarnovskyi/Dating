@@ -12,7 +12,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {RegisterComponent} from "./register.component";
 import {RegisterFormComponent} from './components/register-form/register-form.component';
-import {AutocompleteGroupPipeModule} from "../../../../../../../../modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
+import {AutocompleteGroupPipeModule} from "modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
 
 
 const routes: Routes = [
