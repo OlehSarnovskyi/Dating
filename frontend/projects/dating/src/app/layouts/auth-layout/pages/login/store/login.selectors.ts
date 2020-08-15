@@ -17,3 +17,18 @@ export const getShortCode = createSelector(
   getFeature,
   state => state.shortCode
 )
+
+export const getAuthData = createSelector(
+  getFeature,
+  state => state.authData
+);
+
+export const getAccessToken = createSelector(
+  getAuthData,
+  state => state && state.accessToken
+)
+
+export const getIsAuth = createSelector(
+  getAccessToken,
+  accessToken => !!accessToken
+)
