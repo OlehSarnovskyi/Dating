@@ -17,6 +17,8 @@ export class RegisterFormComponent implements OnInit {
   secondFormGroup: FormGroup
   isOptional = false
 
+  hidePassword: boolean
+
   stateGroups: any[] = [{
     letter: 'A',
     names: ['Alabama', 'Alaska', 'Arizona', 'Arkansas']
@@ -92,7 +94,8 @@ export class RegisterFormComponent implements OnInit {
 
   initForms(): void {
     this.firstFormGroup = this.fb.group({
-      sex: ['', Validators.required]
+      email: [null, [Validators.email, Validators.required]],
+      password: [null, [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
       firstName: ['', Validators.required],
