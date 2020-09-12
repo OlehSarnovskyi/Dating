@@ -66,3 +66,16 @@ module.exports.login = async (req, res) => {
         })
     }
 }
+
+module.exports.refreshToken = async (req, res) => {
+    const candidate = await User.findOne({email: req.body.email})
+
+    const token = jwt.sign({
+        email: candidate.email,
+        userId: candidate._id
+    }, keys.jwt, {expiresIn: 60 * 60})
+
+    res.status(200).json({
+        accessToken: `Bearer ${token}`
+    })
+}
