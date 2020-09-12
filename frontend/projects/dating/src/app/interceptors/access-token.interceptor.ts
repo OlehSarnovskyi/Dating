@@ -25,11 +25,11 @@ export class AccessTokenInterceptor implements HttpInterceptor {
         return next.handle(authRequest).pipe(
           filter(err => err instanceof HttpErrorResponse && err.status === 401),
           catchError(err => {
-            console.log(err)
             return EMPTY
           })
         )
-      })
+      }),
     )
+    return next.handle(request)
   }
 }
