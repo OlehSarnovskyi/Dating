@@ -20,9 +20,8 @@ export class RegisterFormComponent implements OnInit {
 
   firstFormGroup: FormGroup
   secondFormGroup: FormGroup
-  isOptional = false
 
-  hidePassword: boolean
+  hidePassword: boolean = true
 
   colorsEyes = ['blue', 'green', 'brown']
 
@@ -149,24 +148,24 @@ export class RegisterFormComponent implements OnInit {
 
     if (value && this.hobbies.length < 10) {
       this.hobbies.push(value)
+      this.hobbiesControl.setValue([...this.hobbies])
     }
 
     if (input) {
       input.value = ''
     }
-
-    this.hobbiesControl.setValue(null)
   }
 
   removeHobby(hobby) {
     this.hobbies = [...this.hobbies.filter(h => h !== hobby)]
+    this.hobbiesControl.setValue([...this.hobbies])
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     if (this.hobbies.length < 10) {
       this.hobbies.push(event.option.viewValue);
+      this.hobbiesControl.setValue([...this.hobbies])
       this.hobbyInputRef.nativeElement.value = '';
-      this.hobbiesControl.setValue(null);
     }
   }
 

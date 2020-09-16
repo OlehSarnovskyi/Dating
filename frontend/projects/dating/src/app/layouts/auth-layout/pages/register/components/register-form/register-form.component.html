@@ -1,12 +1,12 @@
 <mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form class="first-form" [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Email/Password</ng-template>
-      <mat-form-field appearance="fill">
+      <ng-template matStepLabel>Мейл та пароль</ng-template>
+      <mat-form-field>
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="pat@example.com" formControlName="email">
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Enter your password</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'"  formControlName="password">
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
@@ -19,9 +19,9 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+  <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your data</ng-template>
+      <ng-template matStepLabel>Мої дані</ng-template>
 
       <div>
         <mat-form-field class="example-full-width" appearance="fill">
@@ -88,7 +88,6 @@
       <mat-divider></mat-divider>
 
       <div>
-        <mat-label>Height</mat-label>
         <mat-form-field>
           <mat-label>minimum</mat-label>
           <input matInput placeholder="Min" formControlName="minHeight">
@@ -145,7 +144,6 @@
       <mat-divider></mat-divider>
 
       <div>
-        <mat-label>hobbies</mat-label>
         <mat-form-field class="example-chip-list">
           <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip
@@ -165,7 +163,10 @@
               (matChipInputTokenEnd)="addHobby($event)">
           </mat-chip-list>
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let hobby of filteredHobbies | autocomplete:hobbiesControl.value" [value]="hobby">
+            <mat-option
+              *ngFor="let hobby of filteredHobbies | autocomplete:hobbyInput.value"
+              [value]="hobby"
+            >
               {{hobby}}
             </mat-option>
           </mat-autocomplete>
@@ -188,6 +189,14 @@
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Кого я шукаю</ng-template>
+    Will be the same as second step
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
