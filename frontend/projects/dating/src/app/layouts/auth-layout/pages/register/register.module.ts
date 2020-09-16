@@ -10,13 +10,38 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatChipsModule} from "@angular/material/chips";
 import {RegisterComponent} from "./register.component";
 import {RegisterFormComponent} from './components/register-form/register-form.component';
 import {AutocompleteGroupPipeModule} from "modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
+import {AutocompletePipeModule} from "modules/pipes/autocomplete/autocomplete-pipe.module";
 
 
 const routes: Routes = [
   {path: '', component: RegisterComponent}
+]
+
+const pipeModules = [
+  AutocompleteGroupPipeModule,
+  AutocompletePipeModule
+]
+
+const materialModules = [
+  MatFormFieldModule,
+  MatInputModule,
+  MatIconModule,
+  MatButtonModule,
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatAutocompleteModule,
+  MatButtonToggleModule,
+  MatSelectModule,
+  MatDividerModule,
+  MatChipsModule
 ]
 
 @NgModule({
@@ -27,16 +52,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatAutocompleteModule,
     ReactiveFormsModule,
-    AutocompleteGroupPipeModule
+    ...materialModules,
+    ...pipeModules
   ],
   exports: [
     RouterModule

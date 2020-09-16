@@ -1,5 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {MatChipInputEvent} from "@angular/material/chips";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
 
 @Component({
@@ -10,14 +13,20 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class RegisterFormComponent implements OnInit {
 
-  minDate: Date;
-  maxDate: Date;
+  @ViewChild('hobbyInput') hobbyInputRef: ElementRef<HTMLInputElement>
+
+  minDate: Date
+  maxDate: Date
 
   firstFormGroup: FormGroup
   secondFormGroup: FormGroup
   isOptional = false
 
   hidePassword: boolean
+
+  colorsEyes = ['blue', 'green', 'brown']
+
+  colorsHair = ['dark', 'blond', 'brown']
 
   stateGroups: any[] = [{
     letter: 'A',
@@ -80,16 +89,18 @@ export class RegisterFormComponent implements OnInit {
     names: ['Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
   }];
 
+  hobbies: any = ['music', 'food']
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  filteredHobbies = ['1', 'asd', 'zxc', 'football']
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.initForms();
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    const currentDay = new Date().getDate();
-    this.minDate = new Date(currentYear - 200, currentMonth, currentDay);
-    this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
+    this.initForms()
+    this.setMinDateMaxDate()
   }
 
   initForms(): void {
@@ -98,9 +109,17 @@ export class RegisterFormComponent implements OnInit {
       password: [null, [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
-      firstName: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      stateGroup: ['', Validators.required]
+      birthDate: [null, Validators.required],
+      sex: [null, Validators.required],
+      city: [null, Validators.required],
+      purposeOfMeet: [null, Validators.required],
+      minHeight: [null, Validators.required],
+      maxHeight: [null, Validators.required],
+      bodyShape: [null, Validators.required],
+      colorEyes: [null, Validators.required],
+      colorHair: [null, Validators.required],
+      hobbies: [null, Validators.required],
+      creed: [null, Validators.required]
     })
   }
 
@@ -110,6 +129,51 @@ export class RegisterFormComponent implements OnInit {
       ...this.secondFormGroup.value
     }
     console.log(data)
+  }
+
+  setMinDateMaxDate() {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const currentDay = new Date().getDate();
+    this.minDate = new Date(currentYear - 200, currentMonth, currentDay);
+    this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
+  }
+
+  addHobby(event: MatChipInputEvent) {
+    const input = event.input
+    const value = event.value.trim()
+
+    if (value) {
+      this.hobbies.push(value)
+    }
+
+    if (input) {
+      input.value = ''
+    }
+
+    this.hobbiesControl.setValue(null)
+  }
+
+  removeHobby(hobby) {
+    this.hobbies = [...this.hobbies.filter(h => h !== hobby)]
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.hobbies.push(event.option.viewValue);
+    this.hobbyInputRef.nativeElement.value = '';
+    this.hobbiesControl.setValue(null);
+  }
+
+  get colorEyesControl(): AbstractControl {
+    return this.secondFormGroup.get('colorEyes')
+  }
+
+  get colorHairControl(): AbstractControl {
+    return this.secondFormGroup.get('colorHair')
+  }
+
+  get hobbiesControl(): AbstractControl {
+    return this.secondFormGroup.get('hobbies')
   }
 }
 

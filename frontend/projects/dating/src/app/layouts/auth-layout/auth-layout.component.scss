@@ -2,7 +2,7 @@
 
 .container {
   @include display-flex(center, center);
-  height: 100vh;
+  height: 150vh;
   background-size: cover;
   background: lightcoral no-repeat center;
 }
