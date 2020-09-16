@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 
-const _filter = (opt: string[], value: string): string[] => {
+const _filter = (opt: (string | number)[], value: string): (string | number)[] => {
   const filterValue = value.toLowerCase()
 
-  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0)
+  return opt.filter(item => item.toString().toLowerCase().indexOf(filterValue) === 0)
 }
 
 @Pipe({
@@ -16,7 +16,7 @@ export class AutocompleteGroupPipe implements PipeTransform {
     if (search) {
       return value
         .map(element => ({[label]: element[label], [searchField]: _filter(element[searchField], search)}))
-        .filter(element => element[searchField].length > 0)
+        .filter(element => element[searchField].toString().length > 0)
     }
 
     return value

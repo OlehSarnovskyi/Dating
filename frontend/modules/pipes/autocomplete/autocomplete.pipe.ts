@@ -5,10 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class AutocompletePipe implements PipeTransform {
 
-  transform(value: any[], search: string, searchField: string): any[] {
+  transform(value: any[], search: string, searchField?: string): any[] {
     if (search) {
       return [...value
-        .filter(element => element[searchField].toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+        .filter(element =>
+          searchField && element[searchField].toString().toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+          !searchField && element.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
+        )
       ]
     }
 
