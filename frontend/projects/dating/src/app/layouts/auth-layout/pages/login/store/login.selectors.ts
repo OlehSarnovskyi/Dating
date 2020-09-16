@@ -1,5 +1,5 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {ILoginState, LOGIN_FEATURE_NAME} from "..";
+import {ILoginState, LOGIN_FEATURE_NAME} from "./login.reducer";
 
 const getFeature = createFeatureSelector<ILoginState>(LOGIN_FEATURE_NAME)
 

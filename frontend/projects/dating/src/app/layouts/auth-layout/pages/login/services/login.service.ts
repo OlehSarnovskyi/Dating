@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {ILoginForm, ISignedIn} from "..";
+import {ISignedIn} from "../models/signed-in.interface";
+import {ILoginForm} from "../models/login.interface";
 
 @Injectable()
 export class LoginService {

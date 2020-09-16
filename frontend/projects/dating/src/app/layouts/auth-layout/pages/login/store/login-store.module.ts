@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {JwtModule} from "@auth0/angular-jwt";
-import {LOGIN_FEATURE_NAME, LoginEffects, loginReducer, LoginService} from "..";
+import {LOGIN_FEATURE_NAME, loginReducer} from "./login.reducer";
+import {LoginEffects} from "./login.effects";
+import {LoginService} from "../services/login.service";
 
 
 @NgModule({

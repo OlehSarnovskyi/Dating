@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ILoginForm} from "./models/login.interface";
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {getLoaded, getLoading, getShortCode} from "./store/login.selectors";
 import {login} from "./store/login.actions";
+import {ILoginForm} from "./models/login.interface";
 
 @Component({
   selector: 'app-login',

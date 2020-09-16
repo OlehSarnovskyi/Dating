@@ -3,8 +3,11 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, delayWhen, filter, first, map, switchMap} from "rxjs/operators";
 import {of, timer} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
-import {getIsAuth, ISignedIn, login, loginFailed, LoginService, loginSuccess} from "..";
+import {ISignedIn} from "../models/signed-in.interface";
+import {LoginService} from "../services/login.service";
+import {login, loginFailed, loginSuccess} from "./login.actions";
 import {select, Store} from "@ngrx/store";
+import {getIsAuth} from "./login.selectors";
 
 @Injectable()
 export class LoginEffects {
