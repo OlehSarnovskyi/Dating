@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
+import {MatChipInputEvent, MatChipList} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
 
@@ -14,6 +13,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 export class RegisterFormComponent implements OnInit {
 
   @ViewChild('hobbyInput') hobbyInputRef: ElementRef<HTMLInputElement>
+  @ViewChild('chipList') chipListRef: MatChipList
 
   minDate: Date
   maxDate: Date
@@ -92,7 +92,6 @@ export class RegisterFormComponent implements OnInit {
   hobbies: any = ['music', 'food']
   selectable = true;
   removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
 
   filteredHobbies = ['1', 'asd', 'zxc', 'football']
 
@@ -101,6 +100,10 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() {
     this.initForms()
     this.setMinDateMaxDate()
+    // TODO rewrite logic for this
+    // this.hobbiesControl.statusChanges.subscribe(
+    //   status => this.chipListRef.errorState = status === 'INVALID'
+    // )
   }
 
   initForms(): void {
@@ -113,6 +116,7 @@ export class RegisterFormComponent implements OnInit {
       sex: [null, Validators.required],
       city: [null, Validators.required],
       purposeOfMeet: [null, Validators.required],
+      sexualOrientation: [null, Validators.required],
       minHeight: [null, Validators.required],
       maxHeight: [null, Validators.required],
       bodyShape: [null, Validators.required],
@@ -143,7 +147,7 @@ export class RegisterFormComponent implements OnInit {
     const input = event.input
     const value = event.value.trim()
 
-    if (value) {
+    if (value && this.hobbies.length < 10) {
       this.hobbies.push(value)
     }
 
@@ -159,9 +163,11 @@ export class RegisterFormComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.hobbies.push(event.option.viewValue);
-    this.hobbyInputRef.nativeElement.value = '';
-    this.hobbiesControl.setValue(null);
+    if (this.hobbies.length < 10) {
+      this.hobbies.push(event.option.viewValue);
+      this.hobbyInputRef.nativeElement.value = '';
+      this.hobbiesControl.setValue(null);
+    }
   }
 
   get colorEyesControl(): AbstractControl {

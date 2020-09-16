@@ -73,6 +73,18 @@
         </mat-form-field>
       </div>
 
+      <div>
+        <mat-form-field>
+          <mat-label>sexualOrientation</mat-label>
+          <mat-select formControlName="sexualOrientation">
+            <mat-option value="option1">Bisexual</mat-option>
+            <mat-option value="option2" disabled>Gay</mat-option>
+            <mat-option value="option3">Hetero</mat-option>
+            <mat-option value="option3">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <mat-divider></mat-divider>
 
       <div>
@@ -150,7 +162,6 @@
               formControlName="hobbies"
               [matAutocomplete]="auto"
               [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
               (matChipInputTokenEnd)="addHobby($event)">
           </mat-chip-list>
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
@@ -162,8 +173,14 @@
       </div>
 
       <div>
-        <mat-label>creed</mat-label>
-        ???
+        <mat-form-field>
+          <mat-label>Сreed</mat-label>
+          <mat-select formControlName="creed">
+            <mat-option value="Christian">Christian</mat-option>
+            <mat-option value="atheist">Atheist</mat-option>
+            <mat-option value="OTHER">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div>

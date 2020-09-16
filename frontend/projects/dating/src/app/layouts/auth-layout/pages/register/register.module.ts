@@ -13,11 +13,12 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDividerModule} from "@angular/material/divider";
-import {MatChipsModule} from "@angular/material/chips";
+import {MAT_CHIPS_DEFAULT_OPTIONS, MatChipsModule} from "@angular/material/chips";
 import {RegisterComponent} from "./register.component";
 import {RegisterFormComponent} from './components/register-form/register-form.component';
 import {AutocompleteGroupPipeModule} from "modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
 import {AutocompletePipeModule} from "modules/pipes/autocomplete/autocomplete-pipe.module";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
 
 
 const routes: Routes = [
@@ -58,6 +59,14 @@ const materialModules = [
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    {
+      provide: MAT_CHIPS_DEFAULT_OPTIONS,
+      useValue: {
+        separatorKeyCodes: [ENTER, COMMA]
+      }
+    }
   ]
 })
 export class RegisterModule {
