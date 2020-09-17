@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {SiteLayoutComponent} from "./site-layout.component";
-import {HeaderModule} from "modules/components/header/header.module";
+import {HeaderModule} from "modules";
 
 
 const routes: Routes = [

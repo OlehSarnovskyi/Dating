@@ -5,13 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {LanguageTranslationModule} from "modules/shared/language-translation/language-translation.module";
-import {ScrollbarModule} from "modules/components/scrollbar/scrollbar.module";
+import {LanguageTranslationModule, ScrollbarModule} from "modules";
 import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {DEFAULT_ROUTER_FEATURENAME, routerReducer, StoreRouterConnectingModule} from "@ngrx/router-store";
-import {LoginStoreModule} from "./layouts/auth-layout/pages/login/store/login-store.module";
+import {LoginStoreModule} from "./layouts/auth-layout/pages/login";
 import {EffectsModule} from "@ngrx/effects";
 import {AccessTokenInterceptor} from "./interceptors/access-token.interceptor";
 

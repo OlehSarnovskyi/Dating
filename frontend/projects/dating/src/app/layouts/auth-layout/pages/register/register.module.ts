@@ -16,8 +16,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MAT_CHIPS_DEFAULT_OPTIONS, MatChipsModule} from "@angular/material/chips";
 import {RegisterComponent} from "./register.component";
 import {RegisterFormComponent} from './components/register-form/register-form.component';
-import {AutocompleteGroupPipeModule} from "modules/pipes/autocomplete-group/autocomplete-group-pipe.module";
-import {AutocompletePipeModule} from "modules/pipes/autocomplete/autocomplete-pipe.module";
+import {AutocompleteGroupPipeModule, AutocompletePipeModule} from "modules";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 
 
