@@ -23,6 +23,7 @@ export class RegisterFormComponent implements OnInit {
 
   firstFormGroup: FormGroup
   secondFormGroup: FormGroup
+  thirdFormGroup: FormGroup
 
   hidePassword: boolean = true
 
@@ -94,6 +95,7 @@ export class RegisterFormComponent implements OnInit {
   cities: any[] = []
 
   hobbies: any[] = ['music', 'food']
+  // TODO check it
   selectable = true;
   removable = true;
 
@@ -106,7 +108,7 @@ export class RegisterFormComponent implements OnInit {
     this.setMinDateMaxDate()
     // TODO rewrite logic for this
     // for cities too
-    // this.hobbiesControl.statusChanges.subscribe(
+    // this.hobbiesSecondFormControl.statusChanges.subscribe(
     //   status => this.chipListOfHobbiesRef.errorState = status === 'INVALID'
     // )
   }
@@ -117,18 +119,32 @@ export class RegisterFormComponent implements OnInit {
       password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
-      birthDate: ['01.10.1987', Validators.required],
+      birthDate: [this.minDate, Validators.required],
       sex: ['male', Validators.required],
-      cities: ['Nebraska', Validators.required],
+      cities: [['Nebraska', 'Texas'], Validators.required],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
-      minHeight: [130, Validators.required],
-      maxHeight: [200, Validators.required],
+      height: [180, Validators.required],
       bodyShape: ['Slim', Validators.required],
-      colorEyes: [['blue'], Validators.required],
-      colorHair: [['dark'], Validators.required],
+      colorEyes: ['blue', Validators.required],
+      colorHair: ['dark', Validators.required],
       hobbies: [['music', 'food'], Validators.required],
       creed: ['Christian', Validators.required]
+    })
+    this.thirdFormGroup = this.fb.group({
+      ageFrom: [18, Validators.required],
+      ageTo: [25, Validators.required],
+      sex: [['male'], Validators.required],
+      cities: [['Nebraska', 'Texas'], Validators.required],
+      purposeOfMeet: [['sex'], Validators.required],
+      sexualOrientations: [['Bisexual'], Validators.required],
+      minHeight: [180, Validators.required],
+      maxHeight: [180, Validators.required],
+      bodyShapes: [['Slim'], Validators.required],
+      colorsEyes: [['blue'], Validators.required],
+      colorsHair: [['dark'], Validators.required],
+      hobbies: [['music', 'food'], Validators.required],
+      creed: [['Christian'], Validators.required]
     })
   }
 
@@ -148,13 +164,10 @@ export class RegisterFormComponent implements OnInit {
     this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
   }
 
-  addCity(event: MatChipInputEvent) {
-    const input = event.input
-    const value = event.value.trim()
-
-    if (value && this.cities.length < 10) {
+  addCity({input, value}: MatChipInputEvent) {
+    if (value.trim() && this.cities.length < 10) {
       this.cities.push(value)
-      this.citiesControl.setValue([...this.cities])
+      this.citiesSecondFormControl.setValue([...this.cities])
     }
 
     if (input) {
@@ -164,27 +177,24 @@ export class RegisterFormComponent implements OnInit {
 
   removeCity(city: any) {
     this.cities = [...this.cities.filter(c => c !== city)]
-    this.citiesControl.setValue([...this.cities])
+    this.citiesSecondFormControl.setValue([...this.cities])
   }
-
 
   selectedCity(event: MatAutocompleteSelectedEvent) {
     if (this.cities.length < 10) {
       this.cities.push(event.option.viewValue)
-      this.citiesControl.setValue([...this.cities])
+      this.citiesSecondFormControl.setValue([...this.cities])
       this.cityInputRef.nativeElement.value = ''
     }
   }
 
-  addHobby(event: MatChipInputEvent) {
-    const input = event.input
-    const value = event.value.trim()
-
-    if (value && this.hobbies.length < 10) {
+  addHobby({input, value}: MatChipInputEvent) {
+    if (value.trim() && this.hobbies.length < 10) {
       this.hobbies.push(value)
-      this.hobbiesControl.setValue([...this.hobbies])
+      this.hobbiesSecondFormControl.setValue([...this.hobbies])
     }
 
+    // TODO check it
     if (input) {
       input.value = ''
     }
@@ -192,32 +202,36 @@ export class RegisterFormComponent implements OnInit {
 
   removeHobby(hobby) {
     this.hobbies = [...this.hobbies.filter(h => h !== hobby)]
-    this.hobbiesControl.setValue([...this.hobbies])
+    this.hobbiesSecondFormControl.setValue([...this.hobbies])
   }
 
   selectedHobby(event: MatAutocompleteSelectedEvent): void {
     if (this.hobbies.length < 10) {
       this.hobbies.push(event.option.viewValue);
-      this.hobbiesControl.setValue([...this.hobbies])
+      this.hobbiesSecondFormControl.setValue([...this.hobbies])
       this.hobbyInputRef.nativeElement.value = '';
     }
   }
 
-  get citiesControl(): AbstractControl {
+  // TODO move to general
+  getValueFromControl(formGroup: FormGroup, formControlName: string, index?: number): any {
+    return index
+      ? formGroup.value[formControlName][index]
+      : formGroup.value[formControlName]
+  }
+
+  get citiesSecondFormControl(): AbstractControl {
     return this.secondFormGroup.get('cities')
   }
 
-  get colorEyesControl(): AbstractControl {
-    return this.secondFormGroup.get('colorEyes')
-  }
-
-  get colorHairControl(): AbstractControl {
-    return this.secondFormGroup.get('colorHair')
-  }
-
-  get hobbiesControl(): AbstractControl {
+  get hobbiesSecondFormControl(): AbstractControl {
     return this.secondFormGroup.get('hobbies')
+  }
+
+  asd() {
+    console.log(this.thirdFormGroup.value)
   }
 }
 
+// TODO type move or remove
 type sex = 'MALE' | 'FEMALE'

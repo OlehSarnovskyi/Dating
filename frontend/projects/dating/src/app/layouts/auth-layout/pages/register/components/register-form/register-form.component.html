@@ -8,9 +8,17 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'"  formControlName="password">
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>
+            {{hidePassword ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
         </button>
       </mat-form-field>
 
@@ -19,12 +27,13 @@
       </div>
     </form>
   </mat-step>
+
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Мої дані</ng-template>
 
       <div>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width">
           <mat-label>Choose a date</mat-label>
           <input
             matInput
@@ -101,12 +110,12 @@
 
       <div>
         <mat-form-field>
-          <mat-label>minimum</mat-label>
-          <input matInput placeholder="Min" formControlName="minHeight">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Maximum</mat-label>
-          <input matInput placeholder="Max" formControlName="maxHeight">
+          <mat-label>Height</mat-label>
+          <input
+            matInput
+            placeholder="cm"
+            formControlName="height"
+            appNumberMask>
         </mat-form-field>
       </div>
 
@@ -124,15 +133,13 @@
       <div>
         <mat-form-field appearance="legacy">
           <mat-label>colorEyes</mat-label>
-          <mat-select multiple formControlName="colorEyes">
-            <mat-select-trigger>
-              {{colorEyesControl.value ? colorEyesControl.value[0] : ''}}
-              <span *ngIf="colorEyesControl.value?.length > 1" class="example-additional-selection">
-                (+{{colorEyesControl.value.length - 1}}
-                {{colorEyesControl.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let color of colorsEyes" [value]="color">{{color}}</mat-option>
+          <mat-select formControlName="colorEyes">
+            <mat-option
+              *ngFor="let color of colorsEyes"
+              [value]="color"
+            >
+              {{color}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -140,15 +147,13 @@
       <div>
         <mat-form-field appearance="legacy">
           <mat-label>colorHair</mat-label>
-          <mat-select multiple formControlName="colorHair">
-            <mat-select-trigger>
-              {{colorHairControl.value ? colorHairControl.value[0] : ''}}
-              <span *ngIf="colorHairControl.value?.length > 1" class="example-additional-selection">
-                (+{{colorHairControl.value.length - 1}}
-                {{colorHairControl.value?.length === 2 ? 'other' : 'others'}})
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let color of colorsHair" [value]="color">{{color}}</mat-option>
+          <mat-select formControlName="colorHair">
+            <mat-option
+              *ngFor="let color of colorsHair"
+              [value]="color"
+            >
+              {{color}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -202,14 +207,257 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup">
     <ng-template matStepLabel>Кого я шукаю</ng-template>
-    Will be the same as second step
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Кого я шукаю</ng-template>
+
+      <div>
+        <mat-form-field>
+          <mat-label>age from</mat-label>
+          <input matInput
+                 placeholder="y.o."
+                 formControlName="ageFrom"
+                 appNumberMask>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>age to</mat-label>
+          <input matInput
+                 placeholder="y.o."
+                 formControlName="ageTo"
+                 appNumberMask>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-button-toggle-group multiple formControlName="sex">
+          <mat-button-toggle value="male">Male</mat-button-toggle>
+          <mat-button-toggle value="female">Female</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div>
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipListOfCities aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let city of cities"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeCity(city)">
+              {{city}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Add city..."
+              #cityInput
+              formControlName="cities"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipListOfCities"
+              (matChipInputTokenEnd)="addCity($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCity($event)">
+            <mat-optgroup
+              *ngFor="let group of stateGroups
+              | autocompleteGroup:cityInput.value:'letter':'names'"
+              [label]="group.letter">
+              <mat-option *ngFor="let name of group.names" [value]="name">
+                {{name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>purposeOfMeet</mat-label>
+          <mat-select multiple formControlName="purposeOfMeet">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'purposeOfMeet')
+                ? getValueFromControl(thirdFormGroup, 'purposeOfMeet', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'purposeOfMeet').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option value="sex">Sex</mat-option>
+            <mat-option value="option2" disabled>Fun</mat-option>
+            <mat-option value="option3">Dating</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>sexualOrientations</mat-label>
+          <mat-select multiple formControlName="sexualOrientations">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'sexualOrientations')
+                ? getValueFromControl(thirdFormGroup, 'sexualOrientations', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'sexualOrientations').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option value="Bisexual">Bisexual</mat-option>
+            <mat-option value="option2" disabled>Gay</mat-option>
+            <mat-option value="option3">Hetero</mat-option>
+            <mat-option value="option3">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div>
+        <mat-form-field>
+          <mat-label>minimum</mat-label>
+          <input
+            matInput
+            placeholder="Min"
+            formControlName="minHeight"
+            appNumberMask>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Maximum</mat-label>
+          <input
+            matInput
+            placeholder="Max"
+            formControlName="maxHeight"
+            appNumberMask>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>bodyShapes</mat-label>
+          <mat-select multiple formControlName="bodyShapes">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'bodyShapes')
+                ? getValueFromControl(thirdFormGroup, 'bodyShapes', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'bodyShapes').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option value="Slim">Slim</mat-option>
+            <mat-option value="option2">Athletic</mat-option>
+            <mat-option value="option3">Fat</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>colorsEyes</mat-label>
+          <mat-select multiple formControlName="colorsEyes">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'colorsEyes')
+                ? getValueFromControl(thirdFormGroup, 'colorsEyes', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'colorsEyes').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let color of colorsEyes" [value]="color">{{color}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>colorsHair</mat-label>
+          <mat-select multiple formControlName="colorsHair">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'colorsHair')
+                ? getValueFromControl(thirdFormGroup, 'colorsHair', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'colorsHair').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'colorsHair').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let color of colorsHair" [value]="color">{{color}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div>
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipListOfHobbies aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let hobby of hobbies"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeHobby(hobby)">
+              {{hobby}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="New hobby..."
+              #hobbyInput
+              formControlName="hobbies"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipListOfHobbies"
+              (matChipInputTokenEnd)="addHobby($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedHobby($event)">
+            <mat-option
+              *ngFor="let hobby of filteredHobbies | autocomplete:hobbyInput.value"
+              [value]="hobby"
+            >
+              {{hobby}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Сreed</mat-label>
+          <mat-select multiple formControlName="creed">
+            <mat-select-trigger>
+              {{
+              getValueFromControl(thirdFormGroup, 'creed')
+                ? getValueFromControl(thirdFormGroup, 'creed', 0)
+                : ''
+              }}
+              <span *ngIf="getValueFromControl(thirdFormGroup, 'creed').length > 1" class="example-additional-selection">
+                (+{{getValueFromControl(thirdFormGroup, 'creed').length - 1}}
+                {{getValueFromControl(thirdFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option value="Christian">Christian</mat-option>
+            <mat-option value="atheist">Atheist</mat-option>
+            <mat-option value="OTHER">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="asd()">Next</button>
+      </div>
+    </form>
   </mat-step>
+
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
