@@ -12,8 +12,11 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 })
 export class RegisterFormComponent implements OnInit {
 
+  @ViewChild('chipListOfCities') chipListOfCitiesRef: MatChipList
+  @ViewChild('cityInput') cityInputRef: ElementRef<HTMLInputElement>
+
   @ViewChild('hobbyInput') hobbyInputRef: ElementRef<HTMLInputElement>
-  @ViewChild('chipList') chipListRef: MatChipList
+  @ViewChild('chipListOfHobbies') chipListOfHobbiesRef: MatChipList
 
   minDate: Date
   maxDate: Date
@@ -88,7 +91,9 @@ export class RegisterFormComponent implements OnInit {
     names: ['Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
   }];
 
-  hobbies: any = ['music', 'food']
+  cities: any[] = []
+
+  hobbies: any[] = ['music', 'food']
   selectable = true;
   removable = true;
 
@@ -100,29 +105,30 @@ export class RegisterFormComponent implements OnInit {
     this.initForms()
     this.setMinDateMaxDate()
     // TODO rewrite logic for this
+    // for cities too
     // this.hobbiesControl.statusChanges.subscribe(
-    //   status => this.chipListRef.errorState = status === 'INVALID'
+    //   status => this.chipListOfHobbiesRef.errorState = status === 'INVALID'
     // )
   }
 
   initForms(): void {
     this.firstFormGroup = this.fb.group({
-      email: [null, [Validators.email, Validators.required]],
-      password: [null, [Validators.minLength(8), Validators.required]]
+      email: ['asd@asd', [Validators.email, Validators.required]],
+      password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
-      birthDate: [null, Validators.required],
-      sex: [null, Validators.required],
-      city: [null, Validators.required],
-      purposeOfMeet: [null, Validators.required],
-      sexualOrientation: [null, Validators.required],
-      minHeight: [null, Validators.required],
-      maxHeight: [null, Validators.required],
-      bodyShape: [null, Validators.required],
-      colorEyes: [null, Validators.required],
-      colorHair: [null, Validators.required],
-      hobbies: [null, Validators.required],
-      creed: [null, Validators.required]
+      birthDate: ['01.10.1987', Validators.required],
+      sex: ['male', Validators.required],
+      cities: ['Nebraska', Validators.required],
+      purposeOfMeet: ['sex', Validators.required],
+      sexualOrientation: ['Bisexual', Validators.required],
+      minHeight: [130, Validators.required],
+      maxHeight: [200, Validators.required],
+      bodyShape: ['Slim', Validators.required],
+      colorEyes: [['blue'], Validators.required],
+      colorHair: [['dark'], Validators.required],
+      hobbies: [['music', 'food'], Validators.required],
+      creed: ['Christian', Validators.required]
     })
   }
 
@@ -140,6 +146,34 @@ export class RegisterFormComponent implements OnInit {
     const currentDay = new Date().getDate();
     this.minDate = new Date(currentYear - 200, currentMonth, currentDay);
     this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
+  }
+
+  addCity(event: MatChipInputEvent) {
+    const input = event.input
+    const value = event.value.trim()
+
+    if (value && this.cities.length < 10) {
+      this.cities.push(value)
+      this.citiesControl.setValue([...this.cities])
+    }
+
+    if (input) {
+      input.value = ''
+    }
+  }
+
+  removeCity(city: any) {
+    this.cities = [...this.cities.filter(c => c !== city)]
+    this.citiesControl.setValue([...this.cities])
+  }
+
+
+  selectedCity(event: MatAutocompleteSelectedEvent) {
+    if (this.cities.length < 10) {
+      this.cities.push(event.option.viewValue)
+      this.citiesControl.setValue([...this.cities])
+      this.cityInputRef.nativeElement.value = ''
+    }
   }
 
   addHobby(event: MatChipInputEvent) {
@@ -161,12 +195,16 @@ export class RegisterFormComponent implements OnInit {
     this.hobbiesControl.setValue([...this.hobbies])
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
+  selectedHobby(event: MatAutocompleteSelectedEvent): void {
     if (this.hobbies.length < 10) {
       this.hobbies.push(event.option.viewValue);
       this.hobbiesControl.setValue([...this.hobbies])
       this.hobbyInputRef.nativeElement.value = '';
     }
+  }
+
+  get citiesControl(): AbstractControl {
+    return this.secondFormGroup.get('cities')
   }
 
   get colorEyesControl(): AbstractControl {
