@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from 
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatChipInputEvent, MatChipList} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {FormControlsService} from "modules/index";
+import {CustomValidators, FormControlsService} from "modules/index";
 
 
 @Component({
@@ -130,7 +130,7 @@ export class RegisterFormComponent implements OnInit {
     this.secondFormGroup = this.fb.group({
       birthDate: ['Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)', Validators.required],
       sex: ['male', Validators.required],
-      cities: [['this[arrName]'], Validators.required],
+      cities: [[...this.myCities], [Validators.required, CustomValidators.minArrayLength(5)]],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
       height: [180, Validators.required],
