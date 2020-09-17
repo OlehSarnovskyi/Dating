@@ -2,13 +2,15 @@ import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from 
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatChipInputEvent, MatChipList} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {FormControlsService} from "modules/index";
 
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FormControlsService]
 })
 export class RegisterFormComponent implements OnInit {
 
@@ -95,13 +97,11 @@ export class RegisterFormComponent implements OnInit {
   cities: any[] = []
 
   hobbies: any[] = ['music', 'food']
-  // TODO check it
-  selectable = true;
-  removable = true;
+  selectable = true
 
   filteredHobbies = ['1', 'asd', 'zxc', 'football']
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private formControlsService: FormControlsService) {}
 
   ngOnInit() {
     this.initForms()
@@ -119,9 +119,9 @@ export class RegisterFormComponent implements OnInit {
       password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
-      birthDate: [this.minDate, Validators.required],
+      birthDate: ['Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)', Validators.required],
       sex: ['male', Validators.required],
-      cities: [['Nebraska', 'Texas'], Validators.required],
+      cities: [null, Validators.required],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
       height: [180, Validators.required],
@@ -194,7 +194,6 @@ export class RegisterFormComponent implements OnInit {
       this.hobbiesSecondFormControl.setValue([...this.hobbies])
     }
 
-    // TODO check it
     if (input) {
       input.value = ''
     }
@@ -213,13 +212,6 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 
-  // TODO move to general
-  getValueFromControl(formGroup: FormGroup, formControlName: string, index?: number): any {
-    return index
-      ? formGroup.value[formControlName][index]
-      : formGroup.value[formControlName]
-  }
-
   get citiesSecondFormControl(): AbstractControl {
     return this.secondFormGroup.get('cities')
   }
@@ -230,6 +222,10 @@ export class RegisterFormComponent implements OnInit {
 
   asd() {
     console.log(this.thirdFormGroup.value)
+  }
+
+  asdTwo() {
+    console.log(this.secondFormGroup)
   }
 }
 

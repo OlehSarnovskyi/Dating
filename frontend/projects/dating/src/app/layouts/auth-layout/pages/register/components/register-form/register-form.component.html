@@ -57,10 +57,9 @@
             <mat-chip
               *ngFor="let city of cities"
               [selectable]="selectable"
-              [removable]="removable"
               (removed)="removeCity(city)">
               {{city}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="Add city..."
@@ -166,10 +165,9 @@
             <mat-chip
               *ngFor="let hobby of hobbies"
               [selectable]="selectable"
-              [removable]="removable"
               (removed)="removeHobby(hobby)">
               {{hobby}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="New hobby..."
@@ -203,7 +201,7 @@
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="asdTwo()">Next</button>
       </div>
     </form>
   </mat-step>
@@ -243,10 +241,9 @@
             <mat-chip
               *ngFor="let city of cities"
               [selectable]="selectable"
-              [removable]="removable"
               (removed)="removeCity(city)">
               {{city}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="Add city..."
@@ -275,13 +272,13 @@
           <mat-select multiple formControlName="purposeOfMeet">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'purposeOfMeet')
-                ? getValueFromControl(thirdFormGroup, 'purposeOfMeet', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'purposeOfMeet').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option value="sex">Sex</mat-option>
@@ -297,13 +294,13 @@
           <mat-select multiple formControlName="sexualOrientations">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'sexualOrientations')
-                ? getValueFromControl(thirdFormGroup, 'sexualOrientations', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'sexualOrientations').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option value="Bisexual">Bisexual</mat-option>
@@ -341,13 +338,13 @@
           <mat-select multiple formControlName="bodyShapes">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'bodyShapes')
-                ? getValueFromControl(thirdFormGroup, 'bodyShapes', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'bodyShapes').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option value="Slim">Slim</mat-option>
@@ -363,13 +360,13 @@
           <mat-select multiple formControlName="colorsEyes">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'colorsEyes')
-                ? getValueFromControl(thirdFormGroup, 'colorsEyes', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'colorsEyes').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colorsEyes" [value]="color">{{color}}</mat-option>
@@ -383,13 +380,13 @@
           <mat-select multiple formControlName="colorsHair">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'colorsHair')
-                ? getValueFromControl(thirdFormGroup, 'colorsHair', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'colorsHair').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'colorsHair').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colorsHair" [value]="color">{{color}}</mat-option>
@@ -405,10 +402,9 @@
             <mat-chip
               *ngFor="let hobby of hobbies"
               [selectable]="selectable"
-              [removable]="removable"
               (removed)="removeHobby(hobby)">
               {{hobby}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="New hobby..."
@@ -435,13 +431,13 @@
           <mat-select multiple formControlName="creed">
             <mat-select-trigger>
               {{
-              getValueFromControl(thirdFormGroup, 'creed')
-                ? getValueFromControl(thirdFormGroup, 'creed', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'creed')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'creed', 0)
                 : ''
               }}
-              <span *ngIf="getValueFromControl(thirdFormGroup, 'creed').length > 1" class="example-additional-selection">
-                (+{{getValueFromControl(thirdFormGroup, 'creed').length - 1}}
-                {{getValueFromControl(thirdFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'creed').length > 1" class="example-additional-selection">
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option value="Christian">Christian</mat-option>
