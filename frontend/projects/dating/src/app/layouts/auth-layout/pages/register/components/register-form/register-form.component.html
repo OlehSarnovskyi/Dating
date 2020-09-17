@@ -53,26 +53,33 @@
 
       <div>
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipListOfCities aria-label="Fruit selection">
+          <mat-chip-list #chipListOfMyCities aria-label="Fruit selection">
             <mat-chip
-              *ngFor="let city of cities"
+              *ngFor="let city of myCities"
               [selectable]="selectable"
-              (removed)="removeCity(city)">
+              (removed)="removeChip('myCities', city, secondFormGroup.get('cities'))">
               {{city}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="Add city..."
-              #cityInput
+              #myCityInput
               formControlName="cities"
-              [matAutocomplete]="auto"
-              [matChipInputFor]="chipListOfCities"
-              (matChipInputTokenEnd)="addCity($event)">
+              [matAutocomplete]="autocompleteMyCities"
+              [matChipInputFor]="chipListOfMyCities"
+              (matChipInputTokenEnd)="addChip('myCities', secondFormGroup.get('cities'), $event)">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCity($event)">
+          <mat-autocomplete
+            #autocompleteMyCities="matAutocomplete"
+            (optionSelected)="
+            selectChip('myCities',
+            secondFormGroup.get('cities'),
+            $event,
+            'myCityInputRef')"
+          >
             <mat-optgroup
               *ngFor="let group of stateGroups
-              | autocompleteGroup:cityInput.value:'letter':'names'"
+              | autocompleteGroup:myCityInput.value:'letter':'names'"
               [label]="group.letter">
               <mat-option *ngFor="let name of group.names" [value]="name">
                 {{name}}
@@ -161,25 +168,32 @@
 
       <div>
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipListOfHobbies aria-label="Fruit selection">
+          <mat-chip-list #chipListOfMyHobbies aria-label="Fruit selection">
             <mat-chip
-              *ngFor="let hobby of hobbies"
+              *ngFor="let hobby of myHobbies"
               [selectable]="selectable"
-              (removed)="removeHobby(hobby)">
+              (removed)="removeChip('myHobbies', hobby, secondFormGroup.get('hobbies'))">
               {{hobby}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="New hobby..."
-              #hobbyInput
+              #myHobbyInput
               formControlName="hobbies"
-              [matAutocomplete]="auto"
-              [matChipInputFor]="chipListOfHobbies"
-              (matChipInputTokenEnd)="addHobby($event)">
+              [matAutocomplete]="autocompleteMyHobbies"
+              [matChipInputFor]="chipListOfMyHobbies"
+              (matChipInputTokenEnd)="addChip('myHobbies', secondFormGroup.get('hobbies'), $event)">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedHobby($event)">
+          <mat-autocomplete
+            #autocompleteMyHobbies="matAutocomplete"
+            (optionSelected)="
+            selectChip('myHobbies',
+            secondFormGroup.get('hobbies'),
+            $event,
+            'myHobbyInputRef')"
+          >
             <mat-option
-              *ngFor="let hobby of filteredHobbies | autocomplete:hobbyInput.value"
+              *ngFor="let hobby of filteredHobbies | autocomplete:myHobbyInput.value"
               [value]="hobby"
             >
               {{hobby}}
@@ -201,7 +215,7 @@
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="asdTwo()">Next</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -237,26 +251,33 @@
 
       <div>
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipListOfCities aria-label="Fruit selection">
+          <mat-chip-list #chipListOfCitiesForSearch aria-label="Fruit selection">
             <mat-chip
-              *ngFor="let city of cities"
+              *ngFor="let city of citiesForSearch"
               [selectable]="selectable"
-              (removed)="removeCity(city)">
+              (removed)="removeChip('citiesForSearch', city, thirdFormGroup.get('cities'))">
               {{city}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="Add city..."
-              #cityInput
+              #cityInputForSearch
               formControlName="cities"
-              [matAutocomplete]="auto"
-              [matChipInputFor]="chipListOfCities"
-              (matChipInputTokenEnd)="addCity($event)">
+              [matAutocomplete]="autocompleteCitiesForSearch"
+              [matChipInputFor]="chipListOfCitiesForSearch"
+              (matChipInputTokenEnd)="addChip('citiesForSearch', thirdFormGroup.get('cities'), $event)">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedCity($event)">
+          <mat-autocomplete
+            #autocompleteCitiesForSearch="matAutocomplete"
+            (optionSelected)="
+            selectChip('citiesForSearch',
+            thirdFormGroup.get('cities'),
+            $event,
+            'cityInputForSearchRef')"
+          >
             <mat-optgroup
               *ngFor="let group of stateGroups
-              | autocompleteGroup:cityInput.value:'letter':'names'"
+              | autocompleteGroup:cityInputForSearch.value:'letter':'names'"
               [label]="group.letter">
               <mat-option *ngFor="let name of group.names" [value]="name">
                 {{name}}
@@ -276,9 +297,11 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}})
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}}
+                )
               </span>
             </mat-select-trigger>
             <mat-option value="sex">Sex</mat-option>
@@ -298,9 +321,11 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}})
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}}
+                )
               </span>
             </mat-select-trigger>
             <mat-option value="Bisexual">Bisexual</mat-option>
@@ -342,9 +367,11 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}})
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}}
+                )
               </span>
             </mat-select-trigger>
             <mat-option value="Slim">Slim</mat-option>
@@ -364,9 +391,11 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}})
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}}
+                )
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colorsEyes" [value]="color">{{color}}</mat-option>
@@ -384,9 +413,11 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}})
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}}
+                )
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colorsHair" [value]="color">{{color}}</mat-option>
@@ -398,25 +429,32 @@
 
       <div>
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipListOfHobbies aria-label="Fruit selection">
+          <mat-chip-list #chipListOfHobbiesForSearch aria-label="Fruit selection">
             <mat-chip
-              *ngFor="let hobby of hobbies"
+              *ngFor="let hobby of hobbiesForSearch"
               [selectable]="selectable"
-              (removed)="removeHobby(hobby)">
+              (removed)="removeChip('hobbiesForSearch', hobby, thirdFormGroup.get('hobbies'))">
               {{hobby}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
               placeholder="New hobby..."
-              #hobbyInput
+              #hobbyInputForSearch
               formControlName="hobbies"
-              [matAutocomplete]="auto"
-              [matChipInputFor]="chipListOfHobbies"
-              (matChipInputTokenEnd)="addHobby($event)">
+              [matAutocomplete]="autocompleteHobbiesForSearch"
+              [matChipInputFor]="chipListOfHobbiesForSearch"
+              (matChipInputTokenEnd)="addChip('hobbiesForSearch', thirdFormGroup.get('hobbies'), $event)">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedHobby($event)">
+          <mat-autocomplete
+            #autocompleteHobbiesForSearch="matAutocomplete"
+            (optionSelected)="
+            selectChip('hobbiesForSearch',
+            thirdFormGroup.get('hobbies'),
+            $event,
+            'hobbyInputForSearchRef')"
+          >
             <mat-option
-              *ngFor="let hobby of filteredHobbies | autocomplete:hobbyInput.value"
+              *ngFor="let hobby of filteredHobbies | autocomplete:hobbyInputForSearch.value"
               [value]="hobby"
             >
               {{hobby}}
@@ -435,7 +473,8 @@
                 ? formControlsService.getValueFromControl(thirdFormGroup, 'creed', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'creed').length > 1" class="example-additional-selection">
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'creed').length > 1"
+                    class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length - 1}}
                 {{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
               </span>
@@ -449,7 +488,7 @@
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="asd()">Next</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>

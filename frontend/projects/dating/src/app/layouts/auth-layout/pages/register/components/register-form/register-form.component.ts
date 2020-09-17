@@ -14,11 +14,17 @@ import {FormControlsService} from "modules/index";
 })
 export class RegisterFormComponent implements OnInit {
 
-  @ViewChild('chipListOfCities') chipListOfCitiesRef: MatChipList
-  @ViewChild('cityInput') cityInputRef: ElementRef<HTMLInputElement>
+  @ViewChild('chipListOfMyCities') chipListOfMyCitiesRef: MatChipList
+  @ViewChild('myCityInput') myCityInputRef: ElementRef<HTMLInputElement>
 
-  @ViewChild('hobbyInput') hobbyInputRef: ElementRef<HTMLInputElement>
-  @ViewChild('chipListOfHobbies') chipListOfHobbiesRef: MatChipList
+  @ViewChild('chipListOfMyHobbies') chipListOfMyHobbiesRef: MatChipList
+  @ViewChild('myHobbyInput') myHobbyInputRef: ElementRef<HTMLInputElement>
+
+  @ViewChild('chipListOfCitiesForSearch') chipListOfCitiesForSearchRef: MatChipList
+  @ViewChild('cityInputForSearch') cityInputForSearchRef: ElementRef<HTMLInputElement>
+
+  @ViewChild('chipListOfHobbiesForSearch') chipListOfHobbiesForSearchRef: MatChipList
+  @ViewChild('hobbyInputForSearch') hobbyInputForSearchRef: ElementRef<HTMLInputElement>
 
   minDate: Date
   maxDate: Date
@@ -94,9 +100,12 @@ export class RegisterFormComponent implements OnInit {
     names: ['Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
   }];
 
-  cities: any[] = []
+  myCities: any[] = ['Washington']
+  citiesForSearch: any[] = ['West Virginia']
 
-  hobbies: any[] = ['music', 'food']
+  myHobbies: any[] = ['music', 'food']
+  hobbiesForSearch: any[] = ['alarm', 'mathematica']
+
   selectable = true
 
   filteredHobbies = ['1', 'asd', 'zxc', 'football']
@@ -121,7 +130,7 @@ export class RegisterFormComponent implements OnInit {
     this.secondFormGroup = this.fb.group({
       birthDate: ['Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)', Validators.required],
       sex: ['male', Validators.required],
-      cities: [null, Validators.required],
+      cities: [['this[arrName]'], Validators.required],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
       height: [180, Validators.required],
@@ -150,8 +159,15 @@ export class RegisterFormComponent implements OnInit {
 
   done() {
     const data = {
-      ...this.firstFormGroup.value,
-      ...this.secondFormGroup.value
+      loginData: {
+        ...this.firstFormGroup.value,
+      },
+      myData: {
+        ...this.secondFormGroup.value
+      },
+      searchData: {
+        ...this.thirdFormGroup.value
+      }
     }
     console.log(data)
   }
@@ -164,10 +180,15 @@ export class RegisterFormComponent implements OnInit {
     this.maxDate = new Date(currentYear - 18, currentMonth, currentDay);
   }
 
-  addCity({input, value}: MatChipInputEvent) {
-    if (value.trim() && this.cities.length < 10) {
-      this.cities.push(value)
-      this.citiesSecondFormControl.setValue([...this.cities])
+  removeChip(arrName: string, chip: string, formControl: AbstractControl) {
+    this[arrName] = [...this[arrName].filter(el => el !== chip)]
+    formControl.setValue([...this[arrName]])
+  }
+
+  addChip(arrName: string, formControl: AbstractControl, {input, value}: MatChipInputEvent) {
+    if (value.trim() && this[arrName].length < 10) {
+      this[arrName] = [...this[arrName], value]
+      formControl.setValue([...this[arrName]])
     }
 
     if (input) {
@@ -175,57 +196,17 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 
-  removeCity(city: any) {
-    this.cities = [...this.cities.filter(c => c !== city)]
-    this.citiesSecondFormControl.setValue([...this.cities])
-  }
-
-  selectedCity(event: MatAutocompleteSelectedEvent) {
-    if (this.cities.length < 10) {
-      this.cities.push(event.option.viewValue)
-      this.citiesSecondFormControl.setValue([...this.cities])
-      this.cityInputRef.nativeElement.value = ''
+  selectChip(
+    arrName: string,
+    formControl: AbstractControl,
+    event: MatAutocompleteSelectedEvent,
+    elRefName: string
+  ) {
+    if (this[arrName].length < 10) {
+      this[arrName] = [...this[arrName], event.option.viewValue]
+      formControl.setValue([...this[arrName]])
+      this[elRefName].nativeElement.value = ''
     }
-  }
-
-  addHobby({input, value}: MatChipInputEvent) {
-    if (value.trim() && this.hobbies.length < 10) {
-      this.hobbies.push(value)
-      this.hobbiesSecondFormControl.setValue([...this.hobbies])
-    }
-
-    if (input) {
-      input.value = ''
-    }
-  }
-
-  removeHobby(hobby) {
-    this.hobbies = [...this.hobbies.filter(h => h !== hobby)]
-    this.hobbiesSecondFormControl.setValue([...this.hobbies])
-  }
-
-  selectedHobby(event: MatAutocompleteSelectedEvent): void {
-    if (this.hobbies.length < 10) {
-      this.hobbies.push(event.option.viewValue);
-      this.hobbiesSecondFormControl.setValue([...this.hobbies])
-      this.hobbyInputRef.nativeElement.value = '';
-    }
-  }
-
-  get citiesSecondFormControl(): AbstractControl {
-    return this.secondFormGroup.get('cities')
-  }
-
-  get hobbiesSecondFormControl(): AbstractControl {
-    return this.secondFormGroup.get('hobbies')
-  }
-
-  asd() {
-    console.log(this.thirdFormGroup.value)
-  }
-
-  asdTwo() {
-    console.log(this.secondFormGroup)
   }
 }
 
