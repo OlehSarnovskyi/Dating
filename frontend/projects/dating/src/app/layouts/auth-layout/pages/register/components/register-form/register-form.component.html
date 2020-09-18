@@ -127,8 +127,8 @@
 
       <div>
         <mat-form-field>
-          <mat-label>bodyShape</mat-label>
-          <mat-select formControlName="bodyShape">
+          <mat-label>bodyType</mat-label>
+          <mat-select formControlName="bodyType">
             <mat-option value="Slim">Slim</mat-option>
             <mat-option value="option2">Athletic</mat-option>
             <mat-option value="option3">Fat</mat-option>
@@ -359,18 +359,18 @@
 
       <div>
         <mat-form-field>
-          <mat-label>bodyShapes</mat-label>
-          <mat-select multiple formControlName="bodyShapes">
+          <mat-label>bodyTypes</mat-label>
+          <mat-select multiple formControlName="bodyTypes">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes', 0)
+              formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes')
+                ? formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyShapes').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length - 1}}
+                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
