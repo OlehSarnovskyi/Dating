@@ -110,7 +110,7 @@ export class RegisterFormComponent implements OnInit {
 
   filteredHobbies = ['1', 'asd', 'zxc', 'football']
 
-  constructor(private fb: FormBuilder, private formControlsService: FormControlsService) {}
+  constructor(private fb: FormBuilder, public formControlsService: FormControlsService) {}
 
   ngOnInit() {
     this.initForms()
@@ -128,12 +128,12 @@ export class RegisterFormComponent implements OnInit {
       password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
     this.secondFormGroup = this.fb.group({
-      birthDate: ['Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)', Validators.required],
+      birthDate: [new Date('Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)'), Validators.required],
       sex: ['male', Validators.required],
       cities: [[...this.myCities], [Validators.required, CustomValidators.minArrayLength(5)]],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
-      height: [180, Validators.required],
+      height: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
       bodyShape: ['Slim', Validators.required],
       colorEyes: ['blue', Validators.required],
       colorHair: ['dark', Validators.required],
@@ -141,14 +141,14 @@ export class RegisterFormComponent implements OnInit {
       creed: ['Christian', Validators.required]
     })
     this.thirdFormGroup = this.fb.group({
-      ageFrom: [18, Validators.required],
-      ageTo: [25, Validators.required],
+      ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(59)]],
+      ageTo: [25, [Validators.required, Validators.min(18), Validators.max(60)]],
       sex: [['male'], Validators.required],
       cities: [['Nebraska', 'Texas'], Validators.required],
       purposeOfMeet: [['sex'], Validators.required],
       sexualOrientations: [['Bisexual'], Validators.required],
-      minHeight: [180, Validators.required],
-      maxHeight: [180, Validators.required],
+      minHeight: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
+      maxHeight: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
       bodyShapes: [['Slim'], Validators.required],
       colorsEyes: [['blue'], Validators.required],
       colorsHair: [['dark'], Validators.required],
