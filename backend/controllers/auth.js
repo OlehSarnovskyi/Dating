@@ -7,7 +7,7 @@ const errorHandler = require('../utils/errorHandler')
 
 
 module.exports.register = async (req, res) => {
-    const candidate = await User.findOne({email: req.body.auth.email})
+    const candidate = await User.findOne({'auth.email': req.body.auth.email})
 
     if (candidate) {
         // if user with this email already registered
@@ -27,11 +27,9 @@ module.exports.register = async (req, res) => {
             myParameters: req.body.myParameters,
             parametersForSearch: req.body.parametersForSearch,
         })
-
         try {
             await user.save()
             res.status(201).json({
-                user,
                 shortCode: 'USER_CREATED'
             })
         } catch (e) {

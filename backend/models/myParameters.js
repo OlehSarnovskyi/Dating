@@ -17,7 +17,7 @@ const myParametersSchema = new Schema({
         required: true
     },
     purposeOfMeet: {
-        type: [String],
+        type: String,
         required: true
     },
     sexualOrientation: {
