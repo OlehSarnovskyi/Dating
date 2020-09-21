@@ -29,9 +29,9 @@ export class RegisterFormComponent implements OnInit {
   minDate: Date
   maxDate: Date
 
-  firstFormGroup: FormGroup
-  secondFormGroup: FormGroup
-  thirdFormGroup: FormGroup
+  authFormGroup: FormGroup
+  myParametersFormGroup: FormGroup
+  parametersForSearchFormGroup: FormGroup
 
   hidePassword: boolean = true
 
@@ -123,11 +123,11 @@ export class RegisterFormComponent implements OnInit {
   }
 
   initForms(): void {
-    this.firstFormGroup = this.fb.group({
+    this.authFormGroup = this.fb.group({
       email: ['asd@asd', [Validators.email, Validators.required]],
       password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
-    this.secondFormGroup = this.fb.group({
+    this.myParametersFormGroup = this.fb.group({
       birthDate: [new Date('Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)'), Validators.required],
       sex: ['male', Validators.required],
       cities: [[...this.myCities], [Validators.required, CustomValidators.minArrayLength(5)]],
@@ -140,7 +140,7 @@ export class RegisterFormComponent implements OnInit {
       hobbies: [['music', 'food'], Validators.required],
       creed: ['Christian', Validators.required]
     })
-    this.thirdFormGroup = this.fb.group({
+    this.parametersForSearchFormGroup = this.fb.group({
       ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(56)]],
       ageTo: [25, [Validators.required, Validators.min(22), Validators.max(60)]],
       sex: [['male'], Validators.required],
@@ -159,14 +159,14 @@ export class RegisterFormComponent implements OnInit {
 
   done() {
     const data = {
-      loginData: {
-        ...this.firstFormGroup.value,
+      auth: {
+        ...this.authFormGroup.value,
       },
-      myData: {
-        ...this.secondFormGroup.value
+      myParameters: {
+        ...this.myParametersFormGroup.value
       },
-      searchData: {
-        ...this.thirdFormGroup.value
+      parametersForSearch: {
+        ...this.parametersForSearchFormGroup.value
       }
     }
     console.log(data)

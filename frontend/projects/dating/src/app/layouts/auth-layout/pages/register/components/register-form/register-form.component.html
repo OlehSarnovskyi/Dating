@@ -1,6 +1,6 @@
 <mat-horizontal-stepper linear #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form class="first-form" [formGroup]="firstFormGroup">
+  <mat-step [stepControl]="authFormGroup">
+    <form class="first-form" [formGroup]="authFormGroup">
       <ng-template matStepLabel>Мейл та пароль</ng-template>
       <mat-form-field>
         <mat-label>Enter your email</mat-label>
@@ -28,8 +28,8 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
+  <mat-step [stepControl]="myParametersFormGroup">
+    <form [formGroup]="myParametersFormGroup">
       <ng-template matStepLabel>Мої дані</ng-template>
 
       <div>
@@ -57,7 +57,7 @@
             <mat-chip
               *ngFor="let city of myCities"
               [selectable]="selectable"
-              (removed)="removeChip('myCities', city, secondFormGroup.get('cities'))">
+              (removed)="removeChip('myCities', city, myParametersFormGroup.get('cities'))">
               {{city}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -67,13 +67,13 @@
               formControlName="cities"
               [matAutocomplete]="autocompleteMyCities"
               [matChipInputFor]="chipListOfMyCities"
-              (matChipInputTokenEnd)="addChip('myCities', secondFormGroup.get('cities'), $event)">
+              (matChipInputTokenEnd)="addChip('myCities', myParametersFormGroup.get('cities'), $event)">
           </mat-chip-list>
           <mat-autocomplete
             #autocompleteMyCities="matAutocomplete"
             (optionSelected)="
             selectChip('myCities',
-            secondFormGroup.get('cities'),
+            myParametersFormGroup.get('cities'),
             $event,
             'myCityInputRef')"
           >
@@ -172,7 +172,7 @@
             <mat-chip
               *ngFor="let hobby of myHobbies"
               [selectable]="selectable"
-              (removed)="removeChip('myHobbies', hobby, secondFormGroup.get('hobbies'))">
+              (removed)="removeChip('myHobbies', hobby, myParametersFormGroup.get('hobbies'))">
               {{hobby}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -182,13 +182,13 @@
               formControlName="hobbies"
               [matAutocomplete]="autocompleteMyHobbies"
               [matChipInputFor]="chipListOfMyHobbies"
-              (matChipInputTokenEnd)="addChip('myHobbies', secondFormGroup.get('hobbies'), $event)">
+              (matChipInputTokenEnd)="addChip('myHobbies', myParametersFormGroup.get('hobbies'), $event)">
           </mat-chip-list>
           <mat-autocomplete
             #autocompleteMyHobbies="matAutocomplete"
             (optionSelected)="
             selectChip('myHobbies',
-            secondFormGroup.get('hobbies'),
+            myParametersFormGroup.get('hobbies'),
             $event,
             'myHobbyInputRef')"
           >
@@ -220,9 +220,9 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="thirdFormGroup">
+  <mat-step [stepControl]="parametersForSearchFormGroup">
     <ng-template matStepLabel>Кого я шукаю</ng-template>
-    <form [formGroup]="thirdFormGroup">
+    <form [formGroup]="parametersForSearchFormGroup">
       <ng-template matStepLabel>Кого я шукаю</ng-template>
 
       <div>
@@ -255,7 +255,7 @@
             <mat-chip
               *ngFor="let city of citiesForSearch"
               [selectable]="selectable"
-              (removed)="removeChip('citiesForSearch', city, thirdFormGroup.get('cities'))">
+              (removed)="removeChip('citiesForSearch', city, parametersForSearchFormGroup.get('cities'))">
               {{city}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -265,13 +265,13 @@
               formControlName="cities"
               [matAutocomplete]="autocompleteCitiesForSearch"
               [matChipInputFor]="chipListOfCitiesForSearch"
-              (matChipInputTokenEnd)="addChip('citiesForSearch', thirdFormGroup.get('cities'), $event)">
+              (matChipInputTokenEnd)="addChip('citiesForSearch', parametersForSearchFormGroup.get('cities'), $event)">
           </mat-chip-list>
           <mat-autocomplete
             #autocompleteCitiesForSearch="matAutocomplete"
             (optionSelected)="
             selectChip('citiesForSearch',
-            thirdFormGroup.get('cities'),
+            parametersForSearchFormGroup.get('cities'),
             $event,
             'cityInputForSearchRef')"
           >
@@ -293,14 +293,14 @@
           <mat-select multiple formControlName="purposeOfMeet">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
@@ -317,14 +317,14 @@
           <mat-select multiple formControlName="sexualOrientations">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
@@ -363,14 +363,14 @@
           <mat-select multiple formControlName="bodyTypes">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'bodyTypes').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
@@ -387,14 +387,14 @@
           <mat-select multiple formControlName="colorsEyes">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
@@ -409,14 +409,14 @@
           <mat-select multiple formControlName="colorsHair">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}}
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
@@ -433,7 +433,7 @@
             <mat-chip
               *ngFor="let hobby of hobbiesForSearch"
               [selectable]="selectable"
-              (removed)="removeChip('hobbiesForSearch', hobby, thirdFormGroup.get('hobbies'))">
+              (removed)="removeChip('hobbiesForSearch', hobby, parametersForSearchFormGroup.get('hobbies'))">
               {{hobby}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -443,13 +443,13 @@
               formControlName="hobbies"
               [matAutocomplete]="autocompleteHobbiesForSearch"
               [matChipInputFor]="chipListOfHobbiesForSearch"
-              (matChipInputTokenEnd)="addChip('hobbiesForSearch', thirdFormGroup.get('hobbies'), $event)">
+              (matChipInputTokenEnd)="addChip('hobbiesForSearch', parametersForSearchFormGroup.get('hobbies'), $event)">
           </mat-chip-list>
           <mat-autocomplete
             #autocompleteHobbiesForSearch="matAutocomplete"
             (optionSelected)="
             selectChip('hobbiesForSearch',
-            thirdFormGroup.get('hobbies'),
+            parametersForSearchFormGroup.get('hobbies'),
             $event,
             'hobbyInputForSearchRef')"
           >
@@ -469,14 +469,14 @@
           <mat-select multiple formControlName="creed">
             <mat-select-trigger>
               {{
-              formControlsService.getValueFromControl(thirdFormGroup, 'creed')
-                ? formControlsService.getValueFromControl(thirdFormGroup, 'creed', 0)
+              formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed')
+                ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(thirdFormGroup, 'creed').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length > 1"
                     class="example-additional-selection">
-                (+{{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length - 1}}
-                {{formControlsService.getValueFromControl(thirdFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
+                (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length - 1}}
+                {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
               </span>
             </mat-select-trigger>
             <mat-option value="Christian">Christian</mat-option>
