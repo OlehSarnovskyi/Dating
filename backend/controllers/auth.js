@@ -7,20 +7,25 @@ const errorHandler = require('../utils/errorHandler')
 
 
 module.exports.register = async (req, res) => {
-    const candidate = await User.findOne({email: req.body.email})
+    const candidate = await User.findOne({email: req.body.auth.email})
 
     if (candidate) {
         // if user with this email already registered
+        // TODO 'find it faster (when first step) /FE
         res.status(409).json({
             shortCode: 'USER_WITH_EMAIL_ALREADY_EXIST'
         })
     } else {
         const salt = bcrypt.genSaltSync(10)
-        const password = req.body.password
+        const password = req.body.auth.password
 
         const user = new User({
-            email: req.body.email,
-            password: bcrypt.hashSync(password, salt)
+            auth: {
+                email: req.body.auth.email,
+                password: bcrypt.hashSync(password, salt)
+            },
+            myParameters: req.body.myParameters,
+            parametersForSearch: req.body.parametersForSearch,
         })
 
         try {
@@ -37,15 +42,15 @@ module.exports.register = async (req, res) => {
 }
 
 module.exports.login = async (req, res) => {
-    const candidate = await User.findOne({email: req.body.email})
+    const candidate = await User.findOne({'auth.email': req.body.email})
 
     if (candidate) {
-        const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
+        const passwordResult = bcrypt.compareSync(req.body.password, candidate.auth.password)
 
         if (passwordResult) {
             // gen token, passwords match
             const token = jwt.sign({
-                email: candidate.email,
+                email: candidate.auth.email,
                 userId: candidate._id
             }, keys.jwt, {expiresIn: 60 * 60})
 

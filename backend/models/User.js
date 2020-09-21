@@ -10,6 +10,6 @@ const userSchema = new Schema({
     auth: authSchema,
     myParameters: myParametersSchema,
     parametersForSearch: parametersForSearchSchema,
-})
+}, { versionKey: false })
 
 module.exports = mongoose.model('users', userSchema)

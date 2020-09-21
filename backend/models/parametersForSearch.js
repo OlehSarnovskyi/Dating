@@ -39,7 +39,7 @@ const parametersForSearchSchema = new Schema({
     },
     maxHeight: {
         type: Number,
-        min: 190,
+        min: 121,
         max: 220, // and more
         required: true
     },
