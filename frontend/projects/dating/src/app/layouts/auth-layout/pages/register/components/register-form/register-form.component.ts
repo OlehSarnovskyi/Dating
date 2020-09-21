@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatChipInputEvent, MatChipList} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {CustomValidators, FormControlsService} from "modules/index";
+import {IUser} from "../../models/user";
 
 
 @Component({
@@ -25,6 +26,8 @@ export class RegisterFormComponent implements OnInit {
 
   @ViewChild('chipListOfHobbiesForSearch') chipListOfHobbiesForSearchRef: MatChipList
   @ViewChild('hobbyInputForSearch') hobbyInputForSearchRef: ElementRef<HTMLInputElement>
+
+  @Output() registerForm = new EventEmitter<IUser>()
 
   minDate: Date
   maxDate: Date
@@ -110,7 +113,8 @@ export class RegisterFormComponent implements OnInit {
 
   filteredHobbies = ['1', 'asd', 'zxc', 'football']
 
-  constructor(private fb: FormBuilder, public formControlsService: FormControlsService) {}
+  constructor(private fb: FormBuilder,
+              public formControlsService: FormControlsService) {}
 
   ngOnInit() {
     this.initForms()
@@ -130,21 +134,21 @@ export class RegisterFormComponent implements OnInit {
     this.myParametersFormGroup = this.fb.group({
       birthDate: [new Date('Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)'), Validators.required],
       sex: ['male', Validators.required],
-      cities: [[...this.myCities], [Validators.required, CustomValidators.minArrayLength(5)]],
+      cities: [[...this.myCities], Validators.required],
       purposeOfMeet: ['sex', Validators.required],
       sexualOrientation: ['Bisexual', Validators.required],
       height: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
       bodyType: ['Slim', Validators.required],
       colorEyes: ['blue', Validators.required],
       colorHair: ['dark', Validators.required],
-      hobbies: [['music', 'food'], Validators.required],
+      hobbies: [['music', 'food'], [Validators.required, CustomValidators.minArrayLength(5)]],
       creed: ['Christian', Validators.required]
     })
     this.parametersForSearchFormGroup = this.fb.group({
       ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(56)]],
       ageTo: [25, [Validators.required, Validators.min(22), Validators.max(60)]],
       sex: [['male'], Validators.required],
-      cities: [['Nebraska', 'Texas'], Validators.required],
+      cities: [[...this.citiesForSearch], Validators.required],
       purposeOfMeet: [['sex'], Validators.required],
       sexualOrientations: [['Bisexual'], Validators.required],
       minHeight: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
@@ -152,13 +156,13 @@ export class RegisterFormComponent implements OnInit {
       bodyTypes: [['Slim'], Validators.required],
       colorsEyes: [['blue'], Validators.required],
       colorsHair: [['dark'], Validators.required],
-      hobbies: [['music', 'food'], Validators.required],
+      hobbies: [['music', 'food'], [Validators.required, CustomValidators.minArrayLength(5)]],
       creed: [['Christian'], Validators.required]
     })
   }
 
   done() {
-    const data = {
+    const data: IUser = {
       auth: {
         ...this.authFormGroup.value,
       },
@@ -169,9 +173,10 @@ export class RegisterFormComponent implements OnInit {
         ...this.parametersForSearchFormGroup.value
       }
     }
-    console.log(data)
+    this.registerForm.emit(data)
   }
 
+  // TODO !export in other folder!
   setMinDateMaxDate() {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
@@ -209,6 +214,3 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 }
-
-// TODO type move or remove
-type sex = 'MALE' | 'FEMALE'

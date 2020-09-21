@@ -13,6 +13,7 @@ import {DEFAULT_ROUTER_FEATURENAME, routerReducer, StoreRouterConnectingModule} 
 import {LoginStoreModule} from "./layouts/auth-layout/pages/login";
 import {EffectsModule} from "@ngrx/effects";
 import {AccessTokenInterceptor} from "./interceptors/access-token.interceptor";
+import {RegisterStoreModule} from "./layouts/auth-layout/pages/register/store/register-store.module";
 
 
 const NGRX_MODULES = [
@@ -22,7 +23,8 @@ const NGRX_MODULES = [
   StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
   StoreRouterConnectingModule.forRoot(),
   EffectsModule.forRoot([]),
-  LoginStoreModule
+  LoginStoreModule,
+  RegisterStoreModule
 ]
 
 @NgModule({
