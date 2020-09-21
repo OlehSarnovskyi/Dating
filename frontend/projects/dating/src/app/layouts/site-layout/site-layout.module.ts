@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {SiteLayoutComponent} from "./site-layout.component";
-import {HeaderModule} from "modules/index";
+import {HeaderModule} from "./components/header/header.module";
 
 
 const routes: Routes = [
@@ -18,10 +18,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HeaderModule
   ],
-  exports: [
-    SiteLayoutComponent,
-    RouterModule
-  ]
+  exports: [RouterModule]
 })
 export class SiteLayoutModule {
 }
