@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {SearchPageComponent} from "./search-page.component";
+import {DashboardPageComponent} from "./dashboard-page.component";
 
 
 const routes: Routes = [
-  {path: '', component: SearchPageComponent}
+  {path: '', component: DashboardPageComponent}
 ]
 
 const components = [
-  SearchPageComponent
+  DashboardPageComponent
 ]
 
 @NgModule({
@@ -23,4 +23,4 @@ const components = [
     RouterModule
   ]
 })
-export class SearchModule { }
+export class DashboardPageModule { }

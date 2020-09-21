@@ -7,7 +7,15 @@ import {HeaderModule} from "./components/header/header.module";
 const routes: Routes = [
   {
     path: '', component: SiteLayoutComponent, children: [
-      {path: 'search', loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule)}
+      {path: '', redirectTo: 'dashboard'},
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./pages/dashboard/dashboard-page.module').then(m => m.DashboardPageModule)
+      },
+      {
+        path: 'chat',
+        loadChildren: () => import('./pages/chat/chat-page.module').then(m => m.ChatPageModule)
+      }
     ]
   }
 ]
