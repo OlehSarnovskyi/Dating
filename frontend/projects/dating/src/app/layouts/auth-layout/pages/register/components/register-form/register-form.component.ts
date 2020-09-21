@@ -141,8 +141,8 @@ export class RegisterFormComponent implements OnInit {
       creed: ['Christian', Validators.required]
     })
     this.thirdFormGroup = this.fb.group({
-      ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(59)]],
-      ageTo: [25, [Validators.required, Validators.min(18), Validators.max(60)]],
+      ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(56)]],
+      ageTo: [25, [Validators.required, Validators.min(22), Validators.max(60)]],
       sex: [['male'], Validators.required],
       cities: [['Nebraska', 'Texas'], Validators.required],
       purposeOfMeet: [['sex'], Validators.required],
