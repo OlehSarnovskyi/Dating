@@ -71,7 +71,7 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.refreshToken = async (req, res) => {
-    const candidate = await User.findOne({email: req.body.email})
+    const candidate = await User.findOne({'auth.email': req.body.email})
 
     const token = jwt.sign({
         email: candidate.email,
