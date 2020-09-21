@@ -1,0 +1,10 @@
+export type SexualOrientationType =
+  'STRAIGHT'
+  | 'GAY'
+  | 'LESBIAN'
+  | 'BISEXUAL'
+  | 'ASEXUAL'
+  | 'DEMISEXUAL'
+  | 'PANSEXUAL'
+  | 'QUEER'
+  | 'QUESTIONING'
