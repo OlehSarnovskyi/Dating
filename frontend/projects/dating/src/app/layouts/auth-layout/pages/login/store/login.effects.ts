@@ -18,8 +18,8 @@ export class LoginEffects {
       .pipe(
         map(loginSuccessData => loginSuccess(loginSuccessData)),
         catchError(({error}: HttpErrorResponse) => {
-          console.log(error);
-          return of(loginFailed(error));
+          console.log(error)
+          return of(loginFailed(error))
         })
       ))
     )
