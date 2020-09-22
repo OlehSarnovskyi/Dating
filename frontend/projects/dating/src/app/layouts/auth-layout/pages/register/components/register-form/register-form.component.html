@@ -1,33 +1,4 @@
 <mat-horizontal-stepper linear #stepper>
-  <mat-step [stepControl]="authFormGroup">
-    <form class="first-form" [formGroup]="authFormGroup">
-      <ng-template matStepLabel>Мейл та пароль</ng-template>
-      <mat-form-field>
-        <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" formControlName="email">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hidePassword = !hidePassword"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hidePassword"
-        >
-          <mat-icon>
-            {{hidePassword ? 'visibility_off' : 'visibility'}}
-          </mat-icon>
-        </button>
-      </mat-form-field>
-
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-
   <mat-step [stepControl]="myParametersFormGroup">
     <form [formGroup]="myParametersFormGroup">
       <ng-template matStepLabel>Мої дані</ng-template>
@@ -47,8 +18,11 @@
       </div>
 
       <mat-button-toggle-group formControlName="sex">
-        <mat-button-toggle value="male">Male</mat-button-toggle>
-        <mat-button-toggle value="female">Female</mat-button-toggle>
+        <mat-button-toggle
+          *ngFor="let s of sex"
+          [value]="s">
+          {{s}}
+        </mat-button-toggle>
       </mat-button-toggle-group>
 
       <div>
@@ -81,7 +55,10 @@
               *ngFor="let group of stateGroups
               | autocompleteGroup:myCityInput.value:'letter':'names'"
               [label]="group.letter">
-              <mat-option *ngFor="let name of group.names" [value]="name">
+              <mat-option
+                *ngFor="let name of group.names"
+                [value]="name"
+              >
                 {{name}}
               </mat-option>
             </mat-optgroup>
@@ -93,9 +70,12 @@
         <mat-form-field>
           <mat-label>purposeOfMeet</mat-label>
           <mat-select formControlName="purposeOfMeet">
-            <mat-option value="sex">Sex</mat-option>
-            <mat-option value="option2" disabled>Fun</mat-option>
-            <mat-option value="option3">Dating</mat-option>
+            <mat-option
+              *ngFor="let purpose of purposeOfMeet"
+              [value]="purpose"
+            >
+              {{purpose}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -104,10 +84,12 @@
         <mat-form-field>
           <mat-label>sexualOrientation</mat-label>
           <mat-select formControlName="sexualOrientation">
-            <mat-option value="Bisexual">Bisexual</mat-option>
-            <mat-option value="option2" disabled>Gay</mat-option>
-            <mat-option value="option3">Hetero</mat-option>
-            <mat-option value="option3">Other</mat-option>
+            <mat-option
+              *ngFor="let sexualOrientation of sexualOrientations"
+              [value]="sexualOrientation"
+            >
+              {{sexualOrientation}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -129,9 +111,12 @@
         <mat-form-field>
           <mat-label>bodyType</mat-label>
           <mat-select formControlName="bodyType">
-            <mat-option value="Slim">Slim</mat-option>
-            <mat-option value="option2">Athletic</mat-option>
-            <mat-option value="option3">Fat</mat-option>
+            <mat-option
+              *ngFor="let bodyType of bodyTypes"
+              [value]="bodyType"
+            >
+              {{bodyType}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -206,15 +191,17 @@
         <mat-form-field>
           <mat-label>Сreed</mat-label>
           <mat-select formControlName="creed">
-            <mat-option value="Christian">Christian</mat-option>
-            <mat-option value="atheist">Atheist</mat-option>
-            <mat-option value="OTHER">Other</mat-option>
+            <mat-option
+              *ngFor="let c of creed"
+              [value]="c"
+            >
+              {{c}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <div>
-        <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
@@ -297,7 +284,7 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'purposeOfMeet').length === 2 ? 'other' : 'others'}}
@@ -321,7 +308,7 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'sexualOrientations').length === 2 ? 'other' : 'others'}}
@@ -367,7 +354,7 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'bodyTypes').length === 2 ? 'other' : 'others'}}
@@ -391,14 +378,19 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsEyes').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let color of colorsEyes" [value]="color">{{color}}</mat-option>
+            <mat-option
+              *ngFor="let color of colorsEyes"
+              [value]="color"
+            >
+              {{color}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -413,14 +405,19 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'colorsHair').length === 2 ? 'other' : 'others'}}
                 )
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let color of colorsHair" [value]="color">{{color}}</mat-option>
+            <mat-option
+              *ngFor="let color of colorsHair"
+              [value]="color"
+            >
+              {{color}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -473,7 +470,7 @@
                 ? formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed', 0)
                 : ''
               }}
-              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length > 1"
+              <span *ngIf="formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed')?.length > 1"
                     class="example-additional-selection">
                 (+{{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length - 1}}
                 {{formControlsService.getValueFromControl(parametersForSearchFormGroup, 'creed').length === 2 ? 'other' : 'others'}})
@@ -493,12 +490,34 @@
     </form>
   </mat-step>
 
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="done()">Done</button>
-    </div>
+  <mat-step [stepControl]="authFormGroup">
+    <form class="first-form" [formGroup]="authFormGroup">
+      <ng-template matStepLabel>Мейл та пароль</ng-template>
+      <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" formControlName="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>
+            {{hidePassword ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="done()">Done</button>
+      </div>
+    </form>
   </mat-step>
+
 </mat-horizontal-stepper>

@@ -2,7 +2,14 @@ import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Ou
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatChipInputEvent, MatChipList} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {CustomValidators, FormControlsService} from "modules/index";
+import {
+  BodyTypeEnum,
+  ColorEyesEnum,
+  ColorHairEnum,
+  CreedEnum,
+  CustomValidators,
+  FormControlsService, PurposeOfMeetEnum, SexEnum, SexualOrientationEnum
+} from "modules/index";
 import {IUser} from "../../models/user";
 
 
@@ -38,9 +45,13 @@ export class RegisterFormComponent implements OnInit {
 
   hidePassword: boolean = true
 
-  colorsEyes = ['blue', 'green', 'brown']
-
-  colorsHair = ['dark', 'blond', 'brown']
+  sex = Object.values(SexEnum)
+  purposeOfMeet = Object.values(PurposeOfMeetEnum)
+  sexualOrientations = Object.values(SexualOrientationEnum)
+  bodyTypes = Object.values(BodyTypeEnum)
+  colorsEyes = Object.values(ColorEyesEnum)
+  colorsHair = Object.values(ColorHairEnum)
+  creed = Object.values(CreedEnum)
 
   stateGroups: any[] = [{
     letter: 'A',
@@ -106,12 +117,12 @@ export class RegisterFormComponent implements OnInit {
   myCities: any[] = ['Washington']
   citiesForSearch: any[] = ['West Virginia']
 
-  myHobbies: any[] = ['music', 'food']
-  hobbiesForSearch: any[] = ['alarm', 'mathematica']
+  myHobbies: any[] = ['music', 'food', 'sport', 'healthy lifestyle', 'work']
+  hobbiesForSearch: any[] = ['alarm', 'mathematica', 'work', 'business', 'dance']
 
   selectable = true
 
-  filteredHobbies = ['1', 'asd', 'zxc', 'football']
+  filteredHobbies = ['alarm', 'mathematica', 'work', 'business', 'dance', 'filteredHobbies']
 
   constructor(private fb: FormBuilder,
               public formControlsService: FormControlsService) {}
@@ -127,50 +138,50 @@ export class RegisterFormComponent implements OnInit {
   }
 
   initForms(): void {
-    this.authFormGroup = this.fb.group({
-      email: ['asd@asd', [Validators.email, Validators.required]],
-      password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
-    })
     this.myParametersFormGroup = this.fb.group({
       birthDate: [new Date('Tue Sep 10 2002 00:00:00 GMT+0300 (Eastern European Summer Time)'), Validators.required],
-      sex: ['male', Validators.required],
+      sex: [null, Validators.required],
       cities: [[...this.myCities], Validators.required],
-      purposeOfMeet: ['sex', Validators.required],
-      sexualOrientation: ['Bisexual', Validators.required],
+      purposeOfMeet: [null, Validators.required],
+      sexualOrientation: [null, Validators.required],
       height: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
-      bodyType: ['Slim', Validators.required],
-      colorEyes: ['blue', Validators.required],
-      colorHair: ['dark', Validators.required],
-      hobbies: [['music', 'food'], [Validators.required, CustomValidators.minArrayLength(5)]],
-      creed: ['Christian', Validators.required]
+      bodyType: [null, Validators.required],
+      colorEyes: [null, Validators.required],
+      colorHair: [null, Validators.required],
+      hobbies: [[...this.myHobbies], [Validators.required, CustomValidators.minArrayLength(5)]],
+      creed: [null, Validators.required]
     })
     this.parametersForSearchFormGroup = this.fb.group({
       ageFrom: [18, [Validators.required, Validators.min(18), Validators.max(56)]],
       ageTo: [25, [Validators.required, Validators.min(22), Validators.max(60)]],
-      sex: [['male'], Validators.required],
+      sex: [null, Validators.required],
       cities: [[...this.citiesForSearch], Validators.required],
-      purposeOfMeet: [['sex'], Validators.required],
-      sexualOrientations: [['Bisexual'], Validators.required],
-      minHeight: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
+      purposeOfMeet: [null, Validators.required],
+      sexualOrientations: [null, Validators.required],
+      minHeight: [160, [Validators.required, Validators.min(91), Validators.max(220)]],
       maxHeight: [180, [Validators.required, Validators.min(91), Validators.max(220)]],
-      bodyTypes: [['Slim'], Validators.required],
-      colorsEyes: [['blue'], Validators.required],
-      colorsHair: [['dark'], Validators.required],
-      hobbies: [['music', 'food'], [Validators.required, CustomValidators.minArrayLength(5)]],
-      creed: [['Christian'], Validators.required]
+      bodyTypes: [null, Validators.required],
+      colorsEyes: [null, Validators.required],
+      colorsHair: [null, Validators.required],
+      hobbies: [[...this.hobbiesForSearch], [Validators.required, CustomValidators.minArrayLength(5)]],
+      creed: [null, Validators.required]
+    })
+    this.authFormGroup = this.fb.group({
+      email: ['asd@asd', [Validators.email, Validators.required]],
+      password: ['paasdasdaasd', [Validators.minLength(8), Validators.required]]
     })
   }
 
   done() {
     const data: IUser = {
-      auth: {
-        ...this.authFormGroup.value,
-      },
       myParameters: {
         ...this.myParametersFormGroup.value
       },
       parametersForSearch: {
         ...this.parametersForSearchFormGroup.value
+      },
+      auth: {
+        ...this.authFormGroup.value,
       }
     }
     this.registerForm.emit(data)

@@ -1,4 +1,4 @@
-export enum ColorHairsEnum {
+export enum ColorHairEnum {
   BROWN = 'BROWN',
   DARK = 'DARK',
   BLOND = 'BLOND',
