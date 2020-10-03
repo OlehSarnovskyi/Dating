@@ -6,7 +6,7 @@ export const LOGIN_FEATURE_NAME = 'login'
 
 export interface IAuthData {
   accessToken: string
-  id: number
+  userId: string
   iat: number
   /**
    * expired At timestamp
