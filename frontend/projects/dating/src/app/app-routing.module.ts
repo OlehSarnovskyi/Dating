@@ -8,7 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
   },
   {
-    path: 'main',
+    path: 'view',
     loadChildren: () => import('./layouts/site-layout/site-layout.module').then(m => m.SiteLayoutModule)
   }
 ]

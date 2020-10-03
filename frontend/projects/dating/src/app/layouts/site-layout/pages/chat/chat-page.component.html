@@ -1,1 +1,21 @@
-<p>chat-page works!</p>
+<div class="chat-messages">
+  <div class="chat-messages-show-container">
+    <ul class="chat-messages-show-list">
+      <li class="text-center" *ngIf="!messages.length">У чаті ще немає повідомлень!</li>
+      <li
+        [ngClass]="{
+        'text-right': m.userId === userId,
+        'text-left': m.userId !== matchedUserId
+        }"
+        *ngFor="let m of messages"
+      >
+        <span>{{m.message}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="chat-messages-create-container">
+    <input class="chat-messages-create-input" type="text" [formControl]="messageFC">
+<!--    // TODO left from chat logic-->
+    <button class="chat-messages-create-button" (click)="sendMessage()">Send</button>
+  </div>
+</div>
