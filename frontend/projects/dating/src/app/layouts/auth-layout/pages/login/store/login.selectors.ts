@@ -28,6 +28,11 @@ export const getAccessToken = createSelector(
   state => state && state.accessToken
 )
 
+export const getUserId = createSelector(
+  getAuthData,
+  state => state && state.userId
+)
+
 export const getIsAuth = createSelector(
   getAccessToken,
   accessToken => !!accessToken
